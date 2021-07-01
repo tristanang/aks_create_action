@@ -1,0 +1,94 @@
+on: [push]
+
+jobs:
+  deploy_aks_dev:
+    name: "Deploy AKS - Dev Cluster"
+    concurrency: dev
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+      STORAGE_CONTAINER_NAME: ${{ secrets.STORAGE_CONTAINER_NAME }}
+      STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+      TF_VAR_resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+      TF_VAR_cluster_name: devCluster
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+      - name: "Run terraform init"
+        run:  |
+          cd dev
+          terraform init -backend-config="resource_group_name=${TF_VAR_resource_group_name}" \
+          -backend-config="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
+          -backend-config="container_name=${STORAGE_CONTAINER_NAME}" \
+          -backend-config="key=dev.tfstate" \
+          -backend-config="access_key=${STORAGE_ACCESS_KEY}"
+      - name: "Run terraform plan"
+        run: cd dev && terraform plan -no-color -input=false 
+      - name: "Run terraform apply"
+        run: cd dev && terraform apply -input=false -auto-approve
+      - name: "Run terraform destroy"
+        run: cd dev && terraform apply -destroy -auto-approve
+  deploy_aks_test:
+    name: "Deploy AKS - Test Cluster"
+    concurrency: test
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+      STORAGE_CONTAINER_NAME: ${{ secrets.STORAGE_CONTAINER_NAME }}
+      STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+      TF_VAR_resource_group_name: ${{ secrets.RESOURCE_GROUP_NAME }}
+      TF_VAR_cluster_name: testCluster
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+      - name: "Run terraform init"
+        run:  |
+          cd test
+          terraform init -backend-config="resource_group_name=${TF_VAR_resource_group_name}" \
+          -backend-config="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
+          -backend-config="container_name=${STORAGE_CONTAINER_NAME}" \
+          -backend-config="key=test.tfstate" \
+          -backend-config="access_key=${STORAGE_ACCESS_KEY}"
+      - name: "Run terraform plan"
+        run: cd test && terraform plan -no-color -input=false 
+      - name: "Run terraform apply"
+        run: cd test && terraform apply -input=false -auto-approve
+      - name: "Run terraform destroy"
+        run: cd test && terraform apply -destroy -auto-approve
+  validate_action:
+    name: "Validate action"
+    concurrency: action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gambtho/aks_create_action@master
+        with:
+          CLUSTER_NAME: "actionTest"
+          RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
+          STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+          STORAGE_CONTAINER_NAME: ${{ secrets.STORAGE_CONTAINER_NAME }}
+          STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      - uses: gambtho/aks_create_action@master
+        with:
+          CLUSTER_NAME: "actionTest"
+          RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
+          STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+          STORAGE_CONTAINER_NAME: ${{ secrets.STORAGE_CONTAINER_NAME }}
+          STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ACTION_TYPE: "destroy"
