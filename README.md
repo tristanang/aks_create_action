@@ -32,7 +32,6 @@ ARM_TENANT_ID: ******
 ## Inputs
 
 * `CLUSTER_NAME` ***required***
-* `CLUSTER_SIZE` ***optional*** - dev (default) or test
 * `RESOURCE_GROUP_NAME` ***required***
 * `STORAGE_ACCOUNT_NAME` ***required***
 * `STORAGE_CONTAINER_NAME` ***required***
@@ -41,7 +40,10 @@ ARM_TENANT_ID: ******
 * `ARM_CLIENT_SECRET` ***required***
 * `ARM_SUBSCRIPTION_ID` ***required***
 * `ARM_TENANT_ID` ***required***
+* `CLUSTER_SIZE` ***optional*** - dev (default) or test
 * `ACTION_TYPE` ***optional*** - create (default) or delete 
+* `CREATE_ACR` ***optional*** - true or false (default)
+
 
 ## Example usage
 ```
@@ -58,6 +60,7 @@ with:
   ARM_TENANT_ID: ******
   ACTION_TYPE: create # optional
   CLUSTER_SIZE: dev # optional
+  CREATE_ACR: false # optional
 ```
 
 ## References

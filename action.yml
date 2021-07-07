@@ -37,6 +37,9 @@ inputs:
     description: 'create or destroy'
     required: false
     default: 'create'
+  CREATE_ACR:
+    description: 'create ACR with cluster name'
+    default: 'false'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -52,3 +55,4 @@ runs:
     - ${{ inputs.STORAGE_CONTAINER_NAME }}
     - ${{ inputs.STORAGE_ACCESS_KEY }}
     - ${{ inputs.ACTION_TYPE }}
+    - ${{ inputs.CREATE_ACR }}

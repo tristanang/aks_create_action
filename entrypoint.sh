@@ -10,18 +10,11 @@ export STORAGE_ACCESS_KEY=$INPUT_STORAGE_ACCESS_KEY
 
 export TF_VAR_resource_group_name=$INPUT_RESOURCE_GROUP_NAME
 export TF_VAR_cluster_name=$INPUT_CLUSTER_NAME
+export TF_VAR_create_acr=$INPUT_CREATE_ACR
 export TF_IN_AUTOMATION=true
-
-ls -l
-ls -l /action
-ls -l /action/test
-pwd
 
 ## Use TF based on cluster size variable
 cd /action/$INPUT_CLUSTER_SIZE
-
-pwd
-ls -l
 
 echo "*******************"
 echo "Running init"
@@ -51,4 +44,6 @@ else
 
     terraform apply tfplan
 fi
+
+
 
