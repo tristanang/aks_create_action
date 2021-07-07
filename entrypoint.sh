@@ -13,12 +13,12 @@ export TF_VAR_cluster_name=$INPUT_CLUSTER_NAME
 export TF_IN_AUTOMATION=true
 
 ls -l
-ls -l /dev
-ls -l /test
+ls -l /action
+ls -l /action/test
 pwd
 
 ## Use TF based on cluster size variable
-cd /$INPUT_CLUSTER_SIZE
+cd /action/$INPUT_CLUSTER_SIZE
 
 pwd
 ls -l
