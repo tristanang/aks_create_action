@@ -68,7 +68,6 @@ jobs:
     concurrency: action
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - uses: gambtho/aks_create_action@master
         with:
           CLUSTER_NAME: "actionTest"
