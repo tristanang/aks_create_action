@@ -12,11 +12,12 @@ export TF_VAR_resource_group_name=$INPUT_RESOURCE_GROUP_NAME
 export TF_VAR_cluster_name=$INPUT_CLUSTER_NAME
 export TF_IN_AUTOMATION=true
 
-## Use TF based on cluster size variable
-cd $INPUT_CLUSTER_SIZE
-
 ls -l
+ls -l /
 pwd
+
+## Use TF based on cluster size variable
+cd /$INPUT_CLUSTER_SIZE
 
 echo "*******************"
 echo "Running init"
