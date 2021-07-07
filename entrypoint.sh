@@ -15,6 +15,9 @@ export TF_IN_AUTOMATION=true
 ## Use TF based on cluster size variable
 cd $INPUT_CLUSTER_SIZE
 
+ls -l
+pwd
+
 echo "*******************"
 echo "Running init"
 echo "*******************"
