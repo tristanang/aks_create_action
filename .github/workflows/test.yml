@@ -79,6 +79,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          CREATE_ACR: "true"
       - uses: gambtho/aks_create_action@master
         with:
           CLUSTER_NAME: "actionTest"
