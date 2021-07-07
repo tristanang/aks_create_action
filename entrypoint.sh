@@ -13,11 +13,15 @@ export TF_VAR_cluster_name=$INPUT_CLUSTER_NAME
 export TF_IN_AUTOMATION=true
 
 ls -l
-ls -l /
+ls -l /dev
+ls -l /test
 pwd
 
 ## Use TF based on cluster size variable
 cd /$INPUT_CLUSTER_SIZE
+
+pwd
+ls -l
 
 echo "*******************"
 echo "Running init"
