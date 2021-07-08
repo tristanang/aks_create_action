@@ -10,6 +10,7 @@ terraform {
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
+  version = "=2.66.0"
   features {}
   skip_provider_registration = true
 }
