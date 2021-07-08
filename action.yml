@@ -1,6 +1,9 @@
 # action.yml
 name: 'AKS Create Action'
 description: 'Create an AKS Cluster'
+branding:
+  icon: anchor
+  color: blue
 inputs:
   ARM_CLIENT_ID:  # id of input
     description: 'Client ID for Service Principal'
