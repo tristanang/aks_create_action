@@ -63,6 +63,8 @@ with:
   CREATE_ACR: false # optional
 ```
 
+Full deployment workflow showing this action in use - https://github.com/gambtho/go_echo
+
 ## References
 
 * https://docs.microsoft.com/en-us/azure/aks/kubernetes-action
