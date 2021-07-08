@@ -68,7 +68,7 @@ jobs:
     concurrency: action
     runs-on: ubuntu-latest
     steps:
-      - uses: gambtho/aks_create_action@master
+      - uses: gambtho/aks_create_action@main
         with:
           CLUSTER_NAME: "actionTest"
           RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
@@ -80,7 +80,7 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
           CREATE_ACR: "true"
-      - uses: gambtho/aks_create_action@master
+      - uses: gambtho/aks_create_action@main
         with:
           CLUSTER_NAME: "actionTest"
           RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
